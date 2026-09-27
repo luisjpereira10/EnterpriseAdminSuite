@@ -31,5 +31,6 @@ jobs:
         run: chmod +x mvnw
 
       - name: Build and Test with Maven
-        run: ./mvnw clean verify
-              echo "build witch maven"
+        run: |
+          ./mvnw clean verify
+          echo "Build with Maven completed successfully"
