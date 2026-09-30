@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!-- Main Application Footer Fragment -->
+<footer th:fragment="footer" class="app-footer">
+    <!-- Right side: System version indicator -->
+    <div class="float-end d-none d-sm-inline">
+        <b>Version</b> 1.0.0
+    </div>
+
+    <!-- Left side: Application copyright information -->
+    <strong>
+        Copyright &copy; <span th:text="${#temporals.year(#temporals.createNow())}">2026</span>
+        <a href="https://github.com" class="text-decoration-none">Admin Suite Platform</a>.
+    </strong>
+    All rights reserved.
+</footer>
+
+</html>

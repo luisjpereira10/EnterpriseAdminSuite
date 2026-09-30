@@ -1,9 +1,12 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="head">
+<!-- Head fragment accepting a dynamic page title parameter -->
+<head th:fragment="head(title)">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>AdminLTE v4 | Dashboard</title>
+
+    <!-- Dynamic page title with a fallback -->
+    <title th:text="${title ?: 'Dashboard'}"> | Dashboard</title>
 
     <!--begin::Theme Init (prevents flash of incorrect theme on load, #6043)-->
     <script>

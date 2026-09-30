@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--begin::Head-->
-<head th:replace="~{fragments/head :: head}"></head>
+<head th:replace="~{fragments/head :: head('Dashboard')}"></head>
 <!--end::Head-->
 <!--begin::Body-->
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -10,6 +10,12 @@
     <!--begin::Header-->
     <div th:replace="~{fragments/navbar :: navbar}"></div>
     <!--end::Header-->
+    <!--begin::Sidebar-->
+    <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+    <!--end::Sidebar-->
+    <!--begin::Footer-->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <!--end::Footer-->
 </div>
 
 <!--start::scripts-->
@@ -18,6 +24,5 @@
 
 </body>
 <!--end::Body-->
-
 
 </html>
