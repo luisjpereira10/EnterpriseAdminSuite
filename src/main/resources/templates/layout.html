@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-    test
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--begin::Head-->
+<head th:replace="~{fragments/head :: head}"></head>
+<!--end::Head-->
+<!--begin::Body-->
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+<!--begin::App Wrapper-->
+<div class="app-wrapper">
+    <!--begin::Header-->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!--end::Header-->
+</div>
+
+<!--start::scripts-->
+<th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+<!--end::scripts-->
+
 </body>
+<!--end::Body-->
+
+
 </html>
