@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--begin::Head-->
-<head th:replace="~{fragments/head :: head('Dashboard')}"></head>
+<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
 <!--end::Head-->
 <!--begin::Body-->
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
@@ -14,6 +14,15 @@
     <!--begin::Sidebar-->
     <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
     <!--end::Sidebar-->
+    <!-- start::App Main -->
+    <main class="app-main">
+        <!--begin::App Content Header-->
+        <div class="app-content-header">
+            <div th:replace="~{${view} :: content}"></div>
+        </div>
+        <!--end::App Content Header-->
+    </main>
+    <!--end::App Main-->
     <!--begin::Footer-->
     <th:block th:replace="~{fragments/footer :: footer}"></th:block>
     <!--end::Footer-->

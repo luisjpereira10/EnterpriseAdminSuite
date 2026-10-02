@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Este fragmento 'content' se inyectará dentro del <main> de layout.html -->
+<div th:fragment="content" class="container-fluid">
+
+    <!-- Page Title Header -->
+    <div class="row mb-3">
+        <div class="col-sm-6">
+            <h3 class="mb-0">Dashboard</h3>
+        </div>
+    </div>
+
+    <!-- Small Boxes / Metrics Row -->
+    <div class="row">
+        <!-- Box 1: New Orders -->
+        <div class="col-lg-3 col-6">
+            <div class="small-box text-bg-primary">
+                <div class="inner">
+                    <h3>150</h3>
+                    <p>User Registrations</p>
+                </div>
+                <i class="small-box-icon bi bi-person-add"></i>
+                <a href="#" class="small-box-footer link-light link-underline-opacity-0 link-underline-opacity-50-hover">
+                    More info <i class="bi bi-link-45deg"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
