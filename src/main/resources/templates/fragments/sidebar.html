@@ -32,7 +32,9 @@
             >
                 <!-- Navigation Item: Dashboard -->
                 <li class="nav-item">
-                    <a th:href="@{/dashboard}" class="nav-link active">
+                    <a th:href="@{/dashboard}" class="nav-link"
+                       th:classappend="${currentUri != null and (currentUri == '/'
+                            or #strings.startsWith(currentUri, '/dashboard'))} ? 'active' : ''">
                         <i class="nav-icon bi bi-speedometer"></i>
                         <p>Dashboard</p>
                     </a>
@@ -43,7 +45,9 @@
 
                 <!-- Navigation Item: Users (Module Canvas) -->
                 <li class="nav-item">
-                    <a th:href="@{/users}" class="nav-link">
+                    <a th:href="@{/users}" class="nav-link"
+                       th:classappend="${currentUri != null and (currentUri == '/'
+                            or #strings.startsWith(currentUri, '/users'))} ? 'active' : ''">
                         <i class="nav-icon bi bi-people-fill"></i>
                         <p>Users</p>
                     </a>
@@ -51,7 +55,9 @@
 
                 <!-- Navigation Item: Settings (Module Canvas) -->
                 <li class="nav-item">
-                    <a th:href="@{/settings}" class="nav-link">
+                    <a th:href="@{/settings}" class="nav-link"
+                       th:classappend="${currentUri != null and (currentUri == '/'
+                            or #strings.startsWith(currentUri, '/settings'))} ? 'active' : ''">
                         <i class="nav-icon bi bi-gear-fill"></i>
                         <p>Settings</p>
                     </a>
