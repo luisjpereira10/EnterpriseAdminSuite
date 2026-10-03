@@ -11,7 +11,7 @@ public class SettingsController {
 
     @GetMapping
     public String showSettings(Model model) {
-        model.addAttribute("pageTitle", "Dashboard | Settings");
+        model.addAttribute("pageTitle", "Settings");
         model.addAttribute("view", "settings/index");
         return "layout";
     }

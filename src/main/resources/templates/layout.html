@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <!--begin::Head-->
-<head th:replace="~{fragments/head :: head(${pageTitle})}"></head>
+<head th:replace="~{fragments/head :: head(Dashboard + ' | ' + ${pageTitle})}"></head>
 <!--end::Head-->
 <!--begin::Body-->
 <body class="layout-fixed sidebar-expand-lg bg-body-tertiary">

@@ -11,7 +11,7 @@ public class UserController {
 
     @GetMapping
     public String list(Model model) {
-        model.addAttribute("pageTitle", "Dashboard | Users");
+        model.addAttribute("pageTitle", "Users");
         model.addAttribute("view", "users/list");
         return "layout";
     }
