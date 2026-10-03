@@ -1,4 +1,4 @@
-package com.josepereira.inventory_admin_suite.Controller;
+package com.josepereira.inventory_admin_suite.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
