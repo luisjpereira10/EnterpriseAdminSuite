@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <div th:fragment="content">
+        <!-- Header de la sección -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="mb-0">User Directory</h3>
+            <button class="btn btn-primary btn-sm">
+                <i class="bi bi-person-plus-fill me-1"></i> Add New User
+            </button>
+        </div>
+
+        <!-- Tabla AdminLTE v4 Card -->
+        <div class="card mb-4">
+            <div class="card-header">
+                <h3 class="card-title">Registered System Users</h3>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped align-middle mb-0">
+                    <thead>
+                    <tr>
+                        <th style="width: 10px"></th>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td><strong>Alex Developer</strong></td>
+                        <td>alex@example.com</td>
+                        <td><span class="badge text-bg-primary">Admin</span></td>
+                        <td><span class="badge text-bg-success">Active</span></td>
+                        <td class="text-end">
+                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
