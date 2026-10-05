@@ -8,6 +8,16 @@ A modern inventory management web application built with **Spring Boot 4**, **Ja
 
 ---
 
+## 🚧 Work in Progress & Active Evolution
+
+This application is actively being built and refined. Features are deployed incrementally across scheduled release milestones (see [Development Roadmap](#-development-roadmap)).
+
+* **Current Phase:** `v0.2 — Users & Validation` (In Progress)
+* **Update Frequency:** Continuous commits based on GitFlow feature branches.
+* **Architecture:** Subject to enhancements as new layers (JPA/Security/Docker) are introduced.
+
+---
+
 ## 📋 Overview
 
 Enterprise Admin Suite is a web-based management system
@@ -17,6 +27,7 @@ The project is being developed as a portfolio application to demonstrate practic
 with Java and Spring Boot, with planned features including Spring Security, JPA/Hibernate,
 REST APIs, testing, Docker, and CI/CD.
 
+---
 ## 🛠️ Tech Stack & Tooling
 
 * **Language:** Java 21 (LTS)
