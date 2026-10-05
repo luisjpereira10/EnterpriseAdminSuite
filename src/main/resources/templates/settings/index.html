@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<!-- Fragmento inyectado en layout.html -->
+<div th:fragment="content">
+
+    <!-- Header de la página -->
+    <div class="row mb-3">
+        <div class="col-sm-6">
+            <h3 class="mb-0">Account Settings</h3>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Profile & Theme Preferences Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card card-primary card-outline h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-person-gear me-2"></i>Profile & Appearance</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <!-- Profile Image & Change -->
+                        <div class="d-flex align-items-center mb-4">
+                            <img th:src="@{/assets/img/avatar5.png}" alt="User Avatar" class="rounded-circle me-3" style="width: 70px; height: 70px; object-fit: cover;">
+                            <div>
+                                <label for="avatarUpload" class="btn btn-outline-secondary btn-sm me-2">
+                                    <i class="bi bi-upload me-1"></i> Change Photo
+                                </label>
+                                <input type="file" id="avatarUpload" class="d-none" accept="image/*">
+                                <small class="text-muted d-block mt-1">JPG, GIF or PNG. Max size 800K</small>
+                            </div>
+                        </div>
+
+                        <!-- Full Name -->
+                        <div class="mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" value="Jose Pereira">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" value="jose@example.com">
+                        </div>
+
+                        <!-- Theme Selection -->
+                        <div class="mb-3">
+                            <label class="form-label">App Theme Mode</label>
+                            <select class="form-select">
+                                <option value="light" selected>☀️ Light Mode</option>
+                                <option value="dark">🌙 Dark Mode</option>
+                                <option value="system">🖥️ System Default</option>
+                            </select>
+                        </div>
+
+                        <button type="button" class="btn btn-primary">Save Profile Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security & Password Card -->
+        <div class="col-md-6 mb-4">
+            <div class="card card-warning card-outline h-100">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="bi bi-shield-lock me-2"></i>Security</h5>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <!-- Current Password -->
+                        <div class="mb-3">
+                            <label class="form-label">Current Password</label>
+                            <input type="password" class="form-control" placeholder="••••••••">
+                        </div>
+
+                        <!-- New Password -->
+                        <div class="mb-3">
+                            <label class="form-label">New Password</label>
+                            <input type="password" class="form-control" placeholder="Enter new password">
+                        </div>
+
+                        <!-- Confirm New Password -->
+                        <div class="mb-4">
+                            <label class="form-label">Confirm New Password</label>
+                            <input type="password" class="form-control" placeholder="Repeat new password">
+                        </div>
+
+                        <button type="button" class="btn btn-warning">Update Password</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

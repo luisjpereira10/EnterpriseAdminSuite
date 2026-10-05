@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--begin::Head-->
+<head th:replace="~{fragments/head :: head(Dashboard + ' | ' + ${pageTitle})}"></head>
+<!--end::Head-->
+<!--begin::Body-->
+<body class="layout-fixed sidebar-expand-lg bg-body-tertiary">
+
+<!--begin::App Wrapper-->
+<div class="app-wrapper">
+    <!--begin::Header-->
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <!--end::Header-->
+    <!--begin::Sidebar-->
+    <th:block th:replace="~{fragments/sidebar :: sidebar}"></th:block>
+    <!--end::Sidebar-->
+    <!-- start::App Main -->
+    <main class="app-main">
+        <!--begin::App Content-->
+        <div class="app-content-header">
+            <div class="container-fluid">
+            </div>
+        </div>
+        <div class="app-content">
+            <div class="container-fluid">
+                <div th:replace="~{${view} :: content}"></div>
+            </div>
+        </div>
+        <!--end::App Content-->
+    </main>
+    <!--end::App Main-->
+    <!--begin::Footer-->
+    <th:block th:replace="~{fragments/footer :: footer}"></th:block>
+    <!--end::Footer-->
+</div>
+<!--end::App Wrapper-->
+
+<!--start::scripts-->
+<th:block th:replace="~{fragments/scripts :: scripts}"></th:block>
+<!--end::scripts-->
+
+</body>
+<!--end::Body-->
+
+</html>
