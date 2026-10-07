@@ -5,7 +5,21 @@
         <!-- start::Header session -->
         <div class="d-flex justify-content-between align-items-center mb-3">
             <h3 class="mb-0">User Directory</h3>
-            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addUserModal">
+            <div th:if="${successMessage}"
+                 class="alert alert-success alert-dismissible fade show mb-3"
+                 role="alert">
+                <i class="bi bi-check-circle-fill me-2"></i>
+                <span th:text="${successMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <div th:if="${errorMessage}"
+                 class="alert alert-danger alert-dismissible fade show mb-3"
+                 role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <span th:text="${errorMessage}"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#userModal">
                 <i class="bi bi-person-plus-fill me-1"></i> Add New User
             </button>
         </div>
@@ -20,24 +34,35 @@
                 <table class="table table-striped align-middle mb-0">
                     <thead>
                     <tr>
-                        <th style="width: 10px"></th>
                         <th>User</th>
                         <th>Email</th>
                         <th>Role</th>
-                        <th>Status</th>
+                        <th>creation date</th>
                         <th class="text-end">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>1.</td>
-                        <td><strong>Alex Developer</strong></td>
-                        <td>alex@example.com</td>
-                        <td><span class="badge text-bg-primary">Admin</span></td>
-                        <td><span class="badge text-bg-success">Active</span></td>
+                    <tr th:each="user : ${users}">
+                        <input type="hidden" id="userId" name="id">
+                        <td><strong th:text="${user.fullName}"></strong></td>
+                        <td th:text="${user.email}"></td>
+                        <td><span th:text="${user.role}" class="badge text-bg-primary"></span></td>
+                        <td th:text="${#temporals.format(user.created_At, 'dd-MM-yyyy HH:mm')}"></td>
                         <td class="text-end">
-                            <button class="btn btn-sm btn-outline-secondary"><i class="bi bi-pencil"></i></button>
-                            <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                            <button type="button"
+                                    class="btn btn-sm btn-warning me-1"
+                                    th:data-id="${user.id}"
+                                    th:data-fullname="${user.fullName}"
+                                    th:data-email="${user.email}"
+                                    th:data-role="${user.role}"
+                                    onclick="openModalForEdit(this)">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <a th:href="@{/users/delete/{id}(id=${user.id})}"
+                                class="btn btn-sm btn-danger"
+                                onclick="return confirm('Are you sure you want to delete this user?')">
+                                <i class="bi bi-trash"></i>
+                            </a>
                         </td>
                     </tr>
                     </tbody>
@@ -47,16 +72,18 @@
         <!-- end::table AdminLTE v4 Card -->
 
         <!-- start::modal create user-->
-        <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div id="userModal"
+             class="modal fade"
+             th:data-show-modal="${showModal ?: false}"
+             tabindex="-1"
+             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addUserModalLabel">
-                            <i class="bi bi-person-plus me-1"></i> Create New User
-                        </h5>
+                        <h5 class="modal-title" id="modalTitle">Create New User</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form th:action="@{/users}" th:object="${userRequest}" method="post" novalidate>
+                    <form id="userForm" th:action="@{/users}" th:object="${userRequest}" method="post" novalidate>
                         <div class="modal-body">
                             <div class="mb-3">
                                 <label for="fullName" class="form-label">Full Name</label>
@@ -134,16 +161,54 @@
         <!-- Bootstrap 5 JavaScript Bundle (incluye Popper) -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Script to reopen the modal using the Bootstrap API when validation errors occur. -->
-        <script th:if="${showModal}">
-            document.addEventListener("DOMContentLoaded", function () {
-              const addUserModalElement = document.getElementById("addUserModal");
-              if (addUserModalElement) {
-                const modalInstance = new bootstrap.Modal(addUserModalElement);
-                modalInstance.show();
-              }
+        <!-- start::Script to reopen the modal using the Bootstrap API when validation errors occur. -->
+        <script>
+            let modalInstance;
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const modalElement = document.getElementById('userModal');
+                if (modalElement) {
+                    modalInstance = new bootstrap.Modal(modalElement);
+
+                    // Lee si el servidor indicó abrir el modal tras una validación fallida
+                    const shouldShow = modalElement.getAttribute('data-show-modal') === 'true';
+                    if (shouldShow) {
+                        modalInstance.show();
+                    }
+                }
             });
+
+            function openModalForCreate() {
+                document.getElementById('modalTitle').innerText = 'Nuevo Usuario';
+                document.getElementById('userForm').action = '/users';
+                document.getElementById('userId').value = '';
+                document.getElementById('fullName').value = '';
+                document.getElementById('email').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('passwordGroup').style.display = 'block';
+                if (modalInstance) modalInstance.show();
+            }
+
+            function openModalForEdit(button) {
+                // Extraer atributos data-* del botón cliqueado
+                const id = button.getAttribute('data-id');
+                const fullName = button.getAttribute('data-fullname');
+                const email = button.getAttribute('data-email');
+                const role = button.getAttribute('data-role');
+
+                console.log("Editing User ID:", id, fullName, email, role);
+
+                document.getElementById('modalTitle').innerText = 'Edit User';
+                document.getElementById('userForm').action = '/users/update/' + id;
+                document.getElementById('userId').value = id;
+                document.getElementById('fullName').value = fullName;
+                document.getElementById('email').value = email;
+                document.getElementById('role').value = role;
+
+                if (modalInstance) modalInstance.show();
+            }
         </script>
+        <!-- end::Script to reopen the modal using the Bootstrap API when validation errors occur. -->
     </div>
 
 </body>
