@@ -1,7 +1,6 @@
 package com.josepereira.inventory_admin_suite.service.impl;
 
 import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
-import com.josepereira.inventory_admin_suite.dto.UserRequestDTO;
 import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.entity.User;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
