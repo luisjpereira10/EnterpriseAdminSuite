@@ -1,5 +1,6 @@
 package com.josepereira.inventory_admin_suite.service.impl;
 
+import com.josepereira.inventory_admin_suite.dto.UserRequestDTO;
 import com.josepereira.inventory_admin_suite.entity.User;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import com.josepereira.inventory_admin_suite.service.UserService;
@@ -20,7 +21,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User userCreated(User user) {
+    public User userCreated(UserRequestDTO dto) {
+        User user = new User();
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setRole(dto.getRole());
         return userRepository.save(user);
     }
 
@@ -35,13 +41,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> updateUser(Long id, User userDetails) {
+    public Optional<User> updateUser(Long id, UserRequestDTO dto) {
         return userRepository.findById(id).map(existingUser -> {
-            existingUser.setFullName(userDetails.getFullName());
-            existingUser.setEmail(userDetails.getEmail());
-            existingUser.setRole(userDetails.getRole());
-            if (userDetails.getPassword() != null && !userDetails.getPassword().isBlank()) {
-                existingUser.setPassword(userDetails.getPassword());
+            existingUser.setFullName(dto.getFullName());
+            existingUser.setEmail(dto.getEmail());
+            existingUser.setRole(dto.getRole());
+            if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+                existingUser.setPassword(dto.getPassword());
             }
             return userRepository.save(existingUser);
         });
