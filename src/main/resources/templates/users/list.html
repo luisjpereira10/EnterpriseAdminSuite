@@ -141,8 +141,9 @@
                                     <option value="USER">USER</option>
                                     <option value="MANAGER">MANAGER</option>
                                 </select>
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">
                             </div>
-                            <div class="invalid-feedback" th:if="${#fields.hasErrors('role')}" th:errors="*{role}">
+
 
                             </div>
                         </div>

@@ -23,6 +23,6 @@ public class UserCreateDTO {
     @NotBlank(message = "Please confirm your password")
     private String confirmPassword;
 
-    @NotNull(message = "Role is required")
+    @NotBlank(message = "User role must be selected")
     private String role;
 }

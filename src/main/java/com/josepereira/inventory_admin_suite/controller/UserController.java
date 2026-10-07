@@ -93,8 +93,6 @@ public class UserController {
             }
         }
 
-        System.out.println("LOG ERRORS: " + bindingResult.getAllErrors());
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("showModal", true);
             return "layout";
