@@ -1,6 +1,8 @@
 package com.josepereira.inventory_admin_suite.service.impl;
 
+import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
 import com.josepereira.inventory_admin_suite.dto.UserRequestDTO;
+import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.entity.User;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import com.josepereira.inventory_admin_suite.service.UserService;
@@ -21,12 +23,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User userCreated(UserRequestDTO dto) {
+    public User userCreated(UserCreateDTO userCreateDTO) {
         User user = new User();
-        user.setFullName(dto.getFullName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setRole(dto.getRole());
+        user.setFullName(userCreateDTO.getFullName());
+        user.setEmail(userCreateDTO.getEmail());
+        user.setPassword(userCreateDTO.getPassword());
+        user.setRole(userCreateDTO.getRole());
         return userRepository.save(user);
     }
 
@@ -41,13 +43,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> updateUser(Long id, UserRequestDTO dto) {
+    public Optional<User> updateUser(Long id, UserUpdateDTO userUpdateDTOdto) {
         return userRepository.findById(id).map(existingUser -> {
-            existingUser.setFullName(dto.getFullName());
-            existingUser.setEmail(dto.getEmail());
-            existingUser.setRole(dto.getRole());
-            if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-                existingUser.setPassword(dto.getPassword());
+            existingUser.setFullName(userUpdateDTOdto.getFullName());
+            existingUser.setEmail(userUpdateDTOdto.getEmail());
+            existingUser.setRole(userUpdateDTOdto.getRole());
+            if (userUpdateDTOdto.getPassword() != null && !userUpdateDTOdto.getPassword().isBlank()) {
+                existingUser.setPassword(userUpdateDTOdto.getPassword());
             }
             return userRepository.save(existingUser);
         });

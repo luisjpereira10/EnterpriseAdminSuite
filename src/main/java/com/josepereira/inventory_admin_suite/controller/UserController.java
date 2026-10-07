@@ -1,6 +1,8 @@
 package com.josepereira.inventory_admin_suite.controller;
 
+import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
 import com.josepereira.inventory_admin_suite.dto.UserRequestDTO;
+import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,7 @@ public class UserController {
         model.addAttribute("view", "users/list");
         model.addAttribute("users", userService.getAllUsers());
 
-        if(!model.containsAttribute("userRequest")) {
+        if (!model.containsAttribute("userRequest")) {
             model.addAttribute("userRequest", new UserRequestDTO());
         }
         return "layout";
@@ -36,31 +38,31 @@ public class UserController {
 
     @PostMapping
     public String createUser(
-            @Valid @ModelAttribute("userRequest") UserRequestDTO userRequestDTO,
+            @Valid @ModelAttribute("userRequest") UserCreateDTO userCreateDTO,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             Model model
     ) {
-         model.addAttribute("pageTitle", "Users");
-         model.addAttribute("view", "users/list");
-         model.addAttribute("users", userService.getAllUsers());
+        model.addAttribute("pageTitle", "Users");
+        model.addAttribute("view", "users/list");
+        model.addAttribute("users", userService.getAllUsers());
 
-        if (userRequestDTO.getPassword() != null &&
-                !userRequestDTO.getPassword().equals(userRequestDTO.getConfirmPassword())) {
+        if (userCreateDTO.getPassword() != null &&
+                !userCreateDTO.getPassword().equals(userCreateDTO.getConfirmPassword())) {
             bindingResult.rejectValue("password", "error.userRequest", "Passwords do not match");
             bindingResult.rejectValue("confirmPassword", "error.userRequest", "Passwords do not match");
         }
 
         // TODO: Delegate business logic to UserService upon JPA repository integration
-        if(bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors()) {
             model.addAttribute("showModal", true);
             return "layout";
         }
 
         try {
-            userService.userCreated(userRequestDTO);
+            userService.userCreated(userCreateDTO);
             redirectAttributes.addFlashAttribute("successMessage",
-                    "User " + userRequestDTO.getFullName() + " successfully created.");
+                    "User " + userCreateDTO.getFullName() + " successfully created.");
             return "redirect:/users";
 
         } catch (IllegalArgumentException e) {
@@ -75,7 +77,7 @@ public class UserController {
     @PostMapping("/update/{id}")
     public String updateUser(
             @PathVariable("id") Long id,
-            @Valid @ModelAttribute("userRequest") UserRequestDTO userRequestDTO,
+            @Valid @ModelAttribute("userRequest") UserUpdateDTO dto,
             BindingResult bindingResult,
             Model model,
             RedirectAttributes redirectAttributes
@@ -84,33 +86,33 @@ public class UserController {
         model.addAttribute("view", "users/list");
         model.addAttribute("users", userService.getAllUsers());
 
-        // TODO: Refactor validation logic by separating DTOs into UserCreateDTO and UserUpdateDTO
-        // or using Jakarta Validation Groups (@Validated(OnUpdate.class)) to avoid manual BindingResult filtering.
-        if (userRequestDTO.getPassword() == null || userRequestDTO.getPassword().isBlank()) {
-            BindingResult cleanBindingResult = new BeanPropertyBindingResult(userRequestDTO, "userRequest");
-
-            bindingResult.getFieldErrors().stream()
-                    .filter(error -> !error.getField().equals("password") && !error.getField().equals("confirmPassword"))
-                    .forEach(cleanBindingResult::addError);
-
-            bindingResult = cleanBindingResult;
+        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+                bindingResult.rejectValue("password",
+                        "error.userUpdateRequest", "Passwords do not match.");
+                bindingResult.rejectValue("confirmPassword",
+                        "error.userUpdateRequest", "Passwords do not match.");
+            }
         }
+
+        System.out.println("LOG ERRORS: " + bindingResult.getAllErrors());
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("showModal", true);
             return "layout";
         }
 
-        try {
-            userService.updateUser(id, userRequestDTO);
-            redirectAttributes.addFlashAttribute("successMessage", "User updated successfully!");
-            return "redirect:/users";
-
-        } catch (IllegalArgumentException e) {
-            bindingResult.rejectValue("email", "error.userRequest", e.getMessage());
-            model.addAttribute("showModal", true);
-            return "layout";
-        }
+        return userService.updateUser(id, dto)
+                .map(updatedUser -> {
+                    redirectAttributes.addFlashAttribute("successMessage",
+                            "User updated successfully!");
+                    return "redirect:/users";
+                })
+                .orElseGet(() -> {
+                    redirectAttributes.addFlashAttribute("errorMessage",
+                            "User not found with id: " + id);
+                    return "redirect:/users";
+                });
     }
 
     @GetMapping("/delete/{id}")
