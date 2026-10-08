@@ -6,6 +6,7 @@ import com.josepereira.inventory_admin_suite.entity.User;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import com.josepereira.inventory_admin_suite.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,19 +16,21 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
-    public User userCreated(UserCreateDTO userCreateDTO) {
+    public User userCreated(UserCreateDTO dto) {
         User user = new User();
-        user.setFullName(userCreateDTO.getFullName());
-        user.setEmail(userCreateDTO.getEmail());
-        user.setPassword(userCreateDTO.getPassword());
-        user.setRole(userCreateDTO.getRole());
+        user.setFullName(dto.getFullName());
+        user.setEmail(dto.getEmail());
+        user.setPassword(dto.getPassword());
+        user.setRole(passwordEncoder.encode(dto.getPassword()));
         return userRepository.save(user);
     }
 
@@ -42,14 +45,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> updateUser(Long id, UserUpdateDTO userUpdateDTOdto) {
+    public Optional<User> updateUser(Long id, UserUpdateDTO dto) {
         return userRepository.findById(id).map(existingUser -> {
-            existingUser.setFullName(userUpdateDTOdto.getFullName());
-            existingUser.setEmail(userUpdateDTOdto.getEmail());
-            existingUser.setRole(userUpdateDTOdto.getRole());
-            if (userUpdateDTOdto.getPassword() != null && !userUpdateDTOdto.getPassword().isBlank()) {
-                existingUser.setPassword(userUpdateDTOdto.getPassword());
+            existingUser.setFullName(dto.getFullName());
+            existingUser.setEmail(dto.getEmail());
+            existingUser.setRole(dto.getRole());
+
+            if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
+                existingUser.setPassword(passwordEncoder.encode(dto.getPassword()));
             }
+
             return userRepository.save(existingUser);
         });
     }
