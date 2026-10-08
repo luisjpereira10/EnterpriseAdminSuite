@@ -14,20 +14,25 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @RequestMapping("/users")
 public class UserController {
-    private UserService userService;
+
+    private final UserService userService;
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping
-    public String list(Model model) {
-
+    @ModelAttribute
+    public void populateCommonModel(Model model) {
         model.addAttribute("pageTitle", "Users");
         model.addAttribute("view", "users/list");
-        model.addAttribute("users", userService.getAllUsers());
+        if (!model.containsAttribute("users")) {
+            model.addAttribute("users", userService.getAllUsers());
+        }
+    }
 
+    @GetMapping
+    public String list(Model model) {
         if (!model.containsAttribute("userRequest")) {
             model.addAttribute("userRequest", new UserCreateDTO());
         }
@@ -36,40 +41,22 @@ public class UserController {
 
     @PostMapping
     public String createUser(
-            @Valid @ModelAttribute("userRequest") UserCreateDTO userCreateDTO,
+            @Valid @ModelAttribute("userRequest") UserCreateDTO dto,
             BindingResult bindingResult,
             RedirectAttributes redirectAttributes,
             Model model
     ) {
-        model.addAttribute("pageTitle", "Users");
-        model.addAttribute("view", "users/list");
-        model.addAttribute("users", userService.getAllUsers());
+        validatePasswordMatch(dto.getPassword(), dto.getConfirmPassword(), bindingResult, "userRequest");
 
-        if (userCreateDTO.getPassword() != null &&
-                !userCreateDTO.getPassword().equals(userCreateDTO.getConfirmPassword())) {
-            bindingResult.rejectValue("password", "error.userRequest", "Passwords do not match");
-            bindingResult.rejectValue("confirmPassword", "error.userRequest", "Passwords do not match");
-        }
-
-        // TODO: Delegate business logic to UserService upon JPA repository integration
         if (bindingResult.hasErrors()) {
             model.addAttribute("showModal", true);
             return "layout";
         }
 
-        try {
-            userService.userCreated(userCreateDTO);
-            redirectAttributes.addFlashAttribute("successMessage",
-                    "User " + userCreateDTO.getFullName() + " successfully created.");
-            return "redirect:/users";
-
-        } catch (IllegalArgumentException e) {
-            bindingResult.rejectValue("email", "error.userRequest", e.getMessage());
-            model.addAttribute("showModal", true);
-            model.addAttribute("users", userService.getAllUsers());
-            return "users/list";
-        }
-
+        userService.userCreated(dto);
+        redirectAttributes.addFlashAttribute("successMessage",
+                "User " + dto.getFullName() + " successfully created.");
+        return "redirect:/users";
     }
 
     @PostMapping("/update/{id}")
@@ -80,17 +67,8 @@ public class UserController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
-        model.addAttribute("pageTitle", "Users");
-        model.addAttribute("view", "users/list");
-        model.addAttribute("users", userService.getAllUsers());
-
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            if (!dto.getPassword().equals(dto.getConfirmPassword())) {
-                bindingResult.rejectValue("password",
-                        "error.userUpdateRequest", "Passwords do not match.");
-                bindingResult.rejectValue("confirmPassword",
-                        "error.userUpdateRequest", "Passwords do not match.");
-            }
+            validatePasswordMatch(dto.getPassword(), dto.getConfirmPassword(), bindingResult, "userRequest");
         }
 
         if (bindingResult.hasErrors()) {
@@ -116,5 +94,12 @@ public class UserController {
         userService.deleteUser(id);
         redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully!");
         return "redirect:/users";
+    }
+
+    private void validatePasswordMatch(String password, String confirmPassword, BindingResult bindingResult, String objectName) {
+        if (password != null && !password.equals(confirmPassword)) {
+            bindingResult.rejectValue("password", objectName, "Passwords do not match");
+            bindingResult.rejectValue("confirmPassword", objectName, "Passwords do not match.");
+        }
     }
 }
