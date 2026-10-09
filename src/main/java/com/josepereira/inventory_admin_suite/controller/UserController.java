@@ -67,9 +67,7 @@ public class UserController {
             Model model,
             RedirectAttributes redirectAttributes
     ) {
-        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            validatePasswordMatch(dto.getPassword(), dto.getConfirmPassword(), bindingResult, "userRequest");
-        }
+        validatePasswordMatch(dto.getPassword(), dto.getConfirmPassword(), bindingResult, "userRequest");
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("showModal", true);
@@ -91,8 +89,13 @@ public class UserController {
 
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-        userService.deleteUser(id);
-        redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully!");
+
+        if(userService.deleteUser(id)){
+            redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully!");
+        }else {
+            redirectAttributes.addFlashAttribute("errorMensaje", "User not found with id:" +id);
+        }
+
         return "redirect:/users";
     }
 

@@ -5,6 +5,7 @@ import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.entity.User;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import com.josepereira.inventory_admin_suite.service.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,11 +27,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User userCreated(UserCreateDTO dto) {
+        String sanitizedEmail = dto.getEmail().trim().toLowerCase();
+        if(userRepository.existsByEmail(sanitizedEmail)){
+            throw new IllegalArgumentException("Email addres is already in use: ");
+        }
+
         User user = new User();
         user.setFullName(dto.getFullName());
         user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setRole(passwordEncoder.encode(dto.getPassword()));
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setRole(dto.getRole());
         return userRepository.save(user);
     }
 
@@ -46,25 +52,34 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> updateUser(Long id, UserUpdateDTO dto) {
-        return userRepository.findById(id).map(existingUser -> {
-            existingUser.setFullName(dto.getFullName());
-            existingUser.setEmail(dto.getEmail());
-            existingUser.setRole(dto.getRole());
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
 
-            if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-                existingUser.setPassword(passwordEncoder.encode(dto.getPassword()));
-            }
+        String sanitizedEmail = dto.getEmail().trim().toLowerCase();
 
-            return userRepository.save(existingUser);
-        });
+        if(userRepository.existsByEmailAndIdNot(sanitizedEmail, id)){
+            throw new IllegalArgumentException("Email addres is already in use by another user " + sanitizedEmail);
+        }
+
+        user.setFullName(dto.getFullName().trim());
+        user.setEmail(sanitizedEmail);
+        user.setRole(dto.getRole());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        if(dto.getPassword() != null && !dto.getPassword().isBlank()) {
+            user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        }
+
+        return Optional.of(userRepository.save(user));
     }
 
     @Override
     public boolean deleteUser(Long id) {
-        if(userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-            return true;
+        if(!userRepository.existsById(id)) {
+            // TODO: Replace with EntityNotFoundException once GlobalExceptionHandler is configured
+            return false;
         }
-        return false;
+        userRepository.deleteById(id);
+        return true;
     }
 }
