@@ -1,2 +1,14 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+
+src/main/resources/templates/** linguist-vendored
+src/main/resources/static/** linguist-vendored
+
+*.css linguist-vendored
+*.js linguist-vendored
+*.xml linguist-vendored
+*.json linguist-vendored
+*.md linguist-documentation
+*.html linguist-vendored
+
+src/main/java/**/*.java linguist-detectable=true
