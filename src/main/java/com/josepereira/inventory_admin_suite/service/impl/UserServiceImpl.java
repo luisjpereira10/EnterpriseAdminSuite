@@ -28,15 +28,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public User userCreated(UserCreateDTO dto) {
         String sanitizedEmail = dto.getEmail().trim().toLowerCase();
+
         if(userRepository.existsByEmail(sanitizedEmail)){
             throw new IllegalArgumentException("Email addres is already in use: ");
         }
 
+        // TODO: [v0.4] Replace manual entity mapping with MapStruct to cleanly decouple DTOs and Entities
         User user = new User();
-        user.setFullName(dto.getFullName());
-        user.setEmail(dto.getEmail());
+        user.setFullName(dto.getFullName().trim().toLowerCase());
+        user.setEmail(sanitizedEmail);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setRole(dto.getRole());
+        user.setRole(dto.getRole().trim().toLowerCase());
+
         return userRepository.save(user);
     }
 
@@ -61,9 +64,10 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Email addres is already in use by another user " + sanitizedEmail);
         }
 
-        user.setFullName(dto.getFullName().trim());
+        // TODO: [v0.4] Replace manual entity mapping with MapStruct to cleanly decouple DTOs and Entities
+        user.setFullName(dto.getFullName().trim().toLowerCase());
         user.setEmail(sanitizedEmail);
-        user.setRole(dto.getRole());
+        user.setRole(dto.getRole().trim().toLowerCase());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         if(dto.getPassword() != null && !dto.getPassword().isBlank()) {
@@ -76,8 +80,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean deleteUser(Long id) {
         if(!userRepository.existsById(id)) {
-            // TODO: Replace with EntityNotFoundException once GlobalExceptionHandler is configured
-            return false;
+            throw new EntityNotFoundException("User not found with id: " + id);
         }
         userRepository.deleteById(id);
         return true;
