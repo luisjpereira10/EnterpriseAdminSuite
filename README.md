@@ -52,22 +52,47 @@ This project features an automated CI pipeline that builds and verifies the code
 
 ## 📁 Project Architecture & Layout
 
-* `src/main/java`: MVC Controllers, DTOs, and global configurations (`@ControllerAdvice`).
-* `src/main/resources/templates`:
-    * `layout.html`: Base layout container.
-    * `fragments/`: Reusable components (Sidebar, Navbar, Footer).
-    * `users/`, `dashboard/`, `settings/`: Specific module view fragments.
-
+```text
+src/main/java/com/josepereira/inventory_admin_suite
+├── config
+│   ├── DataInitializer.java
+│   ├── GlobalModelAttributes.java
+│   └── SecurityConfig.java
+├── controller
+│   ├── AuthController.java
+│   ├── DashboardController.java
+│   ├── SettingsController.java
+│   └── UserController.java
+├── dto
+│   ├── UserCreateDTO.java
+│   └── UserUpdateDTO.java
+├── entity
+│   └── User.java
+├── exception
+│   ├── GlobalExceptionHandler.java
+│   └── ResourceNotFoundException.java
+├── repository
+│   └── UserRepository.java
+├── service
+│   ├── impl/
+│   └── UserService.java
+└── InventoryAdminSuiteApplication.java 
+```
 ---
 
 ## 📌 Development Roadmap
 
-- [x] AdminLTE 4 integration
-- [x] Thymeleaf layout
-- [x] Reusable fragments
-- [x] Navigation
-- [x] GitFlow
-- [x] GitHub Actions
+## 🎯 Product Milestones & Vision
+
+| Versión | Título de la Versión | Estado |
+| :--- | :--- | :---: |
+| **v1.0** | **`🏛️ v1.0 — Monolithic SSR Edition (Thymeleaf & AdminLTE)`** | 🟡 *In Progress (v0.3)* |
+| **v2.0** | **`🅰️ v2.0 — Decoupled SPA Architecture (Angular Frontend)`** | ⚪ *Planned* |
+| **v3.0** | **`⚛️ v3.0 — Modern Full-Stack Ecosystem (React Frontend)`** | ⚪ *Planned* |
+
+---
+
+## 🏛️ v1.0 — Detailed Execution Plan (Thymeleaf & AdminLTE Baseline)
 
 ### 🎨 v0.1 — UI Architecture & Infrastructure Baseline
 - [x] AdminLTE 4 integration
@@ -88,9 +113,11 @@ This project features an automated CI pipeline that builds and verifies the code
 - [x] UI alerts and User Modals integration
 
 ### 🧪 v0.3 — Testing Suite & Coverage
-- [ ] Unit Testing for `UserService` using Mockito & JUnit 5
+- [x] Global Exception Handling setup
+- [x] Custom Exception implementation (`ResourceNotFoundException`)
+- [x] Unit Testing for `UserService` using Mockito & JUnit 5
 - [ ] Web Layer Testing for `UserController` using `@WebMvcTest`
-- [ ] Integration & Exception Handling verification
+- [ ] Integration & End-to-end verification (`@SpringBootTest`)
 - [ ] Automated Test pipeline execution in GitHub Actions CI
 
 ### 🌐 v0.4 — REST API, OpenAPI/Swagger & Security
@@ -101,11 +128,27 @@ This project features an automated CI pipeline that builds and verifies the code
 - [ ] JSON response standard & HTTP status codes optimization
 - [ ] PostgreSQL integration for Production profile
 
-### 🐳 v0.5 — Containerization & Cloud Deployment
+### 🐳 v0.5 — Containerization & Production Release
 - [ ] Multi-stage `Dockerfile` creation (JDK 21)
 - [ ] `docker-compose.yml` setup for App + PostgreSQL
 - [ ] GitHub Actions CI/CD workflow to publish Docker image to Docker Hub
+- [ ] **🚀 Official v1.0 Tag & Release (Monolithic SSR Edition completed)**
 
+---
+
+## 🅰️ v2.0 — Decoupled SPA Architecture (Angular Frontend)
+- [ ] Angular project setup & module structure
+- [ ] Authentication & JWT Token Handling
+- [ ] AdminLTE template integration with Angular Components
+- [ ] Consumption of v1.0 RESTful APIs
+
+---
+
+## ⚛️ v3.0 — Modern Full-Stack Ecosystem (React Frontend)
+- [ ] React + TypeScript application setup
+- [ ] State Management (Redux Toolkit or React Query)
+- [ ] Modern UI Dashboard implementation
+- [ ] Full REST API integration & End-to-End testing
 ---
 
 ## 🚀 Getting Started
@@ -132,4 +175,4 @@ cd EnterpriseAdminSuite
 
 3. **Access the application:**
 
-   [http://localhost:8080)
+   [http://localhost:8080](http://localhost:8080)
