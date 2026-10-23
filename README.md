@@ -2,21 +2,20 @@
 
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-blue.svg)
 [![Java Version](https://img.shields.io/badge/Java-21-orange.svg)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4%2B%20%2F%204.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-4.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 
 A modern inventory management web application built with **Spring Boot 4**, **Java 21**, and **Thymeleaf**, designed using a modular layout architecture and clean code principles.
 
 ---
 
-## 🚧 Work in Progress & Active Evolution
-
+### 🚧 Work in Progress & Active Evolution
 This application is actively being built and refined. Features are deployed incrementally across scheduled release milestones (see [Development Roadmap](#-development-roadmap)).
 
-* 🎯 **Current Phase:** `v0.3 — Testing Suite & Coverage` (In Progress)
-* 🏷️ **Latest Tag:** [`v0.2`](#-v02--users-validation--security-baseline) — Users, Validation & Security Baseline (Completed)
-* 🔄 **Update Frequency:** Continuous commits based on GitFlow feature branches.
-* 🏛️ **Architecture:** Evolving toward REST APIs, Spring Security authentication, and Docker containerization.
+* **🎯 Current Phase:** `v0.4 — Security & RBAC Baseline (In Progress)`
+* **🏷️ Latest Tag:** `v0.3 — Testing Suite & Coverage (Completed)`
+* **🔄 Update Frequency:** Continuous commits based on GitFlow feature branches.
+* **🏛️ Architecture:** Evolving toward RBAC authentication, REST APIs, and Docker containerization.
 ---
 
 ## 📋 Overview
@@ -52,22 +51,47 @@ This project features an automated CI pipeline that builds and verifies the code
 
 ## 📁 Project Architecture & Layout
 
-* `src/main/java`: MVC Controllers, DTOs, and global configurations (`@ControllerAdvice`).
-* `src/main/resources/templates`:
-    * `layout.html`: Base layout container.
-    * `fragments/`: Reusable components (Sidebar, Navbar, Footer).
-    * `users/`, `dashboard/`, `settings/`: Specific module view fragments.
-
+```text
+src/main/java/com/josepereira/inventory_admin_suite
+├── config
+│   ├── DataInitializer.java
+│   ├── GlobalModelAttributes.java
+│   └── SecurityConfig.java
+├── controller
+│   ├── AuthController.java
+│   ├── DashboardController.java
+│   ├── SettingsController.java
+│   └── UserController.java
+├── dto
+│   ├── UserCreateDTO.java
+│   └── UserUpdateDTO.java
+├── entity
+│   └── User.java
+├── exception
+│   ├── GlobalExceptionHandler.java
+│   └── ResourceNotFoundException.java
+├── repository
+│   └── UserRepository.java
+├── service
+│   ├── impl/
+│   └── UserService.java
+└── InventoryAdminSuiteApplication.java 
+```
 ---
 
 ## 📌 Development Roadmap
 
-- [x] AdminLTE 4 integration
-- [x] Thymeleaf layout
-- [x] Reusable fragments
-- [x] Navigation
-- [x] GitFlow
-- [x] GitHub Actions
+## 🎯 Product Milestones & Vision
+
+| Versión | Título de la Versión | Estado |
+| :--- | :--- | :---: |
+| **v1.0** | **`🏛️ v1.0 — Monolithic SSR Edition (Thymeleaf & AdminLTE)`** | 🟡 *In Progress (v0.3)* |
+| **v2.0** | **`🅰️ v2.0 — Decoupled SPA Architecture (Angular Frontend)`** | ⚪ *Planned* |
+| **v3.0** | **`⚛️ v3.0 — Modern Full-Stack Ecosystem (React Frontend)`** | ⚪ *Planned* |
+
+---
+
+## 🏛️ v1.0 — Detailed Execution Plan (Thymeleaf & AdminLTE Baseline)
 
 ### 🎨 v0.1 — UI Architecture & Infrastructure Baseline
 - [x] AdminLTE 4 integration
@@ -88,24 +112,46 @@ This project features an automated CI pipeline that builds and verifies the code
 - [x] UI alerts and User Modals integration
 
 ### 🧪 v0.3 — Testing Suite & Coverage
-- [ ] Unit Testing for `UserService` using Mockito & JUnit 5
-- [ ] Web Layer Testing for `UserController` using `@WebMvcTest`
-- [ ] Integration & Exception Handling verification
-- [ ] Automated Test pipeline execution in GitHub Actions CI
+- [x] Global Exception Handling setup
+- [x] Custom Exception implementation (`ResourceNotFoundException`)
+- [x] Unit Testing for `UserService` using Mockito & JUnit 5
+- [x] Web Layer Testing for `UserController` using `@WebMvcTest`
+- [x] Unit Testing Suite & Code Quality Validation (JUnit 5 & Mockito)
 
-### 🌐 v0.4 — REST API, OpenAPI/Swagger & Security
-- [ ] Custom Spring Security configuration (Form Login, Sessions & Access Control)
-- [ ] Role & Permission entities (`RBAC` Architecture)
+### 🔐 v0.4 — Security & RBAC Baseline
+- [ ] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
+- [ ] Role & Permission entities and database mapping (`RBAC` Architecture)
+- [ ] User details service & authentication provisioning
+- [ ] Method-level security (`@PreAuthorize`) for views and actions
+
+### 🌐 v0.5 — RESTful API, OpenAPI & PostgreSQL
 - [ ] RESTful API endpoints implementation (`@RestController`)
-- [ ] OpenAPI 3 / Swagger UI integration for interactive API documentation
 - [ ] JSON response standard & HTTP status codes optimization
+- [ ] OpenAPI 3 / Swagger UI integration for interactive API documentation
 - [ ] PostgreSQL integration for Production profile
+- [ ] Integration & End-to-end verification (`@SpringBootTest`)
 
-### 🐳 v0.5 — Containerization & Cloud Deployment
+### 🐳 v0.6 — Containerization & Production Release
 - [ ] Multi-stage `Dockerfile` creation (JDK 21)
 - [ ] `docker-compose.yml` setup for App + PostgreSQL
 - [ ] GitHub Actions CI/CD workflow to publish Docker image to Docker Hub
+- [ ] **🚀 Official v1.0 Tag & Release (Monolithic SSR Edition completed)**
 
+---
+
+### 🅰️ v2.0 — Decoupled SPA Architecture (Angular Frontend)
+- [ ] Angular project setup & module structure
+- [ ] Authentication & JWT Token Handling
+- [ ] AdminLTE template integration with Angular Components
+- [ ] Consumption of v1.0 RESTful APIs
+
+---
+
+### ⚛️ v3.0 — Modern Full-Stack Ecosystem (React Frontend)
+- [ ] React + TypeScript application setup
+- [ ] State Management (Redux Toolkit or React Query)
+- [ ] Modern UI Dashboard implementation
+- [ ] Full REST API integration & End-to-End testing
 ---
 
 ## 🚀 Getting Started
@@ -132,4 +178,4 @@ cd EnterpriseAdminSuite
 
 3. **Access the application:**
 
-   [http://localhost:8080)
+   [http://localhost:8080](http://localhost:8080)
