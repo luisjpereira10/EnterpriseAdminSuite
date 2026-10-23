@@ -2,6 +2,7 @@ package com.josepereira.inventory_admin_suite.controller;
 
 import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
 import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
+import com.josepereira.inventory_admin_suite.exception.ResourceNotFoundException;
 import com.josepereira.inventory_admin_suite.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,17 +75,17 @@ public class UserController {
             return "layout";
         }
 
-        return userService.updateUser(id, dto)
-                .map(updatedUser -> {
-                    redirectAttributes.addFlashAttribute("successMessage",
-                            "User updated successfully!");
-                    return "redirect:/users";
-                })
-                .orElseGet(() -> {
-                    redirectAttributes.addFlashAttribute("errorMessage",
-                            "User not found with id: " + id);
-                    return "redirect:/users";
-                });
+        try {
+            userService.updateUser(id, dto);
+
+            redirectAttributes.addFlashAttribute("successMessage",
+                    "User updated successfully!");
+        } catch (ResourceNotFoundException e) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    e.getMessage());
+        }
+
+        return "redirect:/users";
     }
 
     @GetMapping("/delete/{id}")

@@ -3,6 +3,7 @@ package com.josepereira.inventory_admin_suite.service.impl;
 import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
 import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.entity.User;
+import com.josepereira.inventory_admin_suite.exception.ResourceNotFoundException;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import com.josepereira.inventory_admin_suite.service.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -49,14 +50,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
-        return userRepository.findById(id);
+    public User getUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
     @Override
-    public Optional<User> updateUser(Long id, UserUpdateDTO dto) {
+    public User updateUser(Long id, UserUpdateDTO dto) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
 
         String sanitizedEmail = dto.getEmail().trim().toLowerCase();
 
@@ -68,20 +70,19 @@ public class UserServiceImpl implements UserService {
         user.setFullName(dto.getFullName().trim().toLowerCase());
         user.setEmail(sanitizedEmail);
         user.setRole(dto.getRole().trim().toLowerCase());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
 
         if(dto.getPassword() != null && !dto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
-        return Optional.of(userRepository.save(user));
+        return userRepository.save(user);
     }
 
     @Override
     public boolean deleteUser(Long id) {
-        if(!userRepository.existsById(id)) {
-            throw new EntityNotFoundException("User not found with id: " + id);
-        }
+        User user = userRepository.findById(id)
+                        .orElseThrow( ()-> new ResourceNotFoundException("User not found with id: " + id));
+
         userRepository.deleteById(id);
         return true;
     }
