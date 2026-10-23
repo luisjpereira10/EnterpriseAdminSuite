@@ -9,6 +9,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -30,5 +32,5 @@ public class UserCreateDTO {
     private String confirmPassword;
 
     @NotBlank(message = "User role must be selected")
-    private String role;
+    private List<Integer> roleIds;
 }
