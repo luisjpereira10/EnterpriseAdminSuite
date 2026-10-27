@@ -18,8 +18,10 @@ public class DataInitializer {
     CommandLineRunner initDatabase(UserRepository userRepository,
                                    RoleRepository roleRepository,
                                    PasswordEncoder passwordEncoder) {
-        return args -> { // <- ¡Aquí faltaba retornar la expresión lambda!
+        return args -> {
             if (userRepository.count() == 0) {
+
+                roleRepository.save(Role.builder().name("USER").build());
                 Role adminRole = roleRepository.findByName("ADMIN")
                         .orElseGet(() -> roleRepository.save(Role.builder().name("ADMIN").build()));
 
