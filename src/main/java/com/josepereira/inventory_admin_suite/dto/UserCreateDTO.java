@@ -1,9 +1,6 @@
 package com.josepereira.inventory_admin_suite.dto;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -31,6 +28,6 @@ public class UserCreateDTO {
     @NotBlank(message = "Please confirm your password")
     private String confirmPassword;
 
-    @NotBlank(message = "User role must be selected")
-    private List<Integer> roleIds;
+    @NotEmpty(message = "You must select at least one role")
+    private List<Long> roleIds;
 }

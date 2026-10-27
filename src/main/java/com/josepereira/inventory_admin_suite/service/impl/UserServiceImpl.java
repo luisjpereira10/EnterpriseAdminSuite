@@ -40,17 +40,16 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Email addres is already in use: ");
         }
 
-        // TODO: Replace manual entity mapping with MapStruct to cleanly decouple DTOs and Entities
-        User user = new User();
-        user.setFullName(dto.getFullName().trim().toLowerCase());
-        user.setEmail(sanitizedEmail);
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-
         List<Role> foundRoles = roleRepository.findAllById(dto.getRoleIds());
         if(foundRoles.isEmpty()){
             throw new ResourceNotFoundException("Error: No roles found for the given IDs.");
         }
 
+        // TODO: Replace manual entity mapping with MapStruct to cleanly decouple DTOs and Entities
+        User user = new User();
+        user.setFullName(dto.getFullName().trim().toLowerCase());
+        user.setEmail(sanitizedEmail);
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setRoles(new  HashSet<>(foundRoles));
         return userRepository.save(user);
     }
@@ -77,14 +76,15 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Email addres is already in use by another user " + sanitizedEmail);
         }
 
-        // TODO: Replace manual entity mapping with MapStruct to cleanly decouple DTOs and Entities
-        user.setFullName(dto.getFullName().trim().toLowerCase());
-        user.setEmail(sanitizedEmail);
         List<Role> foundRoles = roleRepository.findAllById(dto.getRoleIds());
-
         if(foundRoles.isEmpty()){
             throw new ResourceNotFoundException("Error: No roles found for the given IDs.");
         }
+
+        // TODO: Replace manual entity mapping with MapStruct to cleanly decouple DTOs and Entities
+        user.setFullName(dto.getFullName().trim().toLowerCase());
+        user.setEmail(sanitizedEmail);
+        user.setRoles(new HashSet<>(foundRoles));
 
         if(dto.getPassword() != null && !dto.getPassword().isBlank()) {
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -100,5 +100,9 @@ public class UserServiceImpl implements UserService {
 
         userRepository.deleteById(id);
         return true;
+    }
+
+    public List<Role> getAllRoles() {
+        return roleRepository.findAll();
     }
 }
