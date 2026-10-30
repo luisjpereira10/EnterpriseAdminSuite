@@ -54,36 +54,70 @@ This project features an automated CI pipeline that builds and verifies the code
 
 ```text
 src/main/java/com/josepereira/inventory_admin_suite
-├── config
-│   ├── DataInitializer.java
-│   ├── GlobalModelAttributes.java
-│   └── SecurityConfig.java
-├── controller
-│   ├── AuthController.java
-│   ├── DashboardController.java
-│   ├── SettingsController.java
-│   └── UserController.java
-├── dto
-│   ├── UserCreateDTO.java
-│   └── UserUpdateDTO.java
-├── entity
-│   ├── Permission.java
-│   ├── Role.java
-│   └── User.java
-├── exception
-│   ├── GlobalExceptionHandler.java
-│   └── ResourceNotFoundException.java
-├── repository
-│   ├── PermissionRepository.java
-│   ├── RoleRepository.java
-│   └── UserRepository.java
-├── security
-│   ├── CustomUserDetails.java
-│   └── UserDetailsServiceImpl.java
-├── service
-│   ├── impl/
-│   └── UserService.java
-└── InventoryAdminSuiteApplication.java
+src
+├── main
+│   ├── java/com/josepereira/inventory_admin_suite
+│   │   ├── config
+│   │   │   ├── DataInitializer.java
+│   │   │   ├── GlobalModelAttributes.java
+│   │   │   └── SecurityConfig.java
+│   │   ├── controller
+│   │   │   ├── AuthController.java
+│   │   │   ├── DashboardController.java
+│   │   │   ├── SettingsController.java
+│   │   │   └── UserController.java
+│   │   ├── dto
+│   │   │   ├── UserCreateDTO.java
+│   │   │   └── UserUpdateDTO.java
+│   │   ├── entity
+│   │   │   ├── Permission.java
+│   │   │   ├── Role.java
+│   │   │   └── User.java
+│   │   ├── exception
+│   │   │   ├── GlobalExceptionHandler.java
+│   │   │   └── ResourceNotFoundException.java
+│   │   ├── repository
+│   │   │   ├── PermissionRepository.java
+│   │   │   ├── RoleRepository.java
+│   │   │   └── UserRepository.java
+│   │   ├── security
+│   │   │   ├── CustomUserDetails.java
+│   │   │   └── UserDetailsServiceImpl.java
+│   │   ├── service
+│   │   │   ├── impl
+│   │   │   │   └── UserServiceImpl.java
+│   │   │   └── UserService.java
+│   │   └── InventoryAdminSuiteApplication.java
+│   └── resources
+│       ├── static
+│       │   ├── assets.img/
+│       │   ├── css/
+│       │   └── js/
+│       ├── templates
+│       │   ├── auth
+│       │   │   └── login.html
+│       │   ├── dashboard
+│       │   │   └── index.html
+│       │   ├── fragments
+│       │   │   ├── footer.html
+│       │   │   ├── head.html
+│       │   │   ├── navbar.html
+│       │   │   ├── scripts.html
+│       │   │   └── sidebar.html
+│       │   ├── settings
+│       │   │   └── index.html
+│       │   ├── users
+│       │   │   └── list.html
+│       │   └── layout.html
+│       ├── application.properties
+│       └── application-test.properties
+└── test
+    └── java/com/josepereira/inventory_admin_suite
+        ├── controller
+        │   └── UserControllerTest.java
+        ├── service
+        │   └── UserServiceImplTest.java
+        └── InventoryAdminSuiteApplicationTests.java
 ```
 ---
 
