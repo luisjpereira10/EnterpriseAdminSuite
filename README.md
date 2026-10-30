@@ -12,8 +12,8 @@ A modern inventory management web application built with **Spring Boot 4**, **Ja
 ### 🚧 Work in Progress & Active Evolution
 This application is actively being built and refined. Features are deployed incrementally across scheduled release milestones (see [Development Roadmap](#-development-roadmap)).
 
-* **🎯 Current Phase:** `v0.4 — Security & RBAC Baseline (In Progress)`
-* **🏷️ Latest Tag:** `v0.3 — Testing Suite & Coverage (Completed)`
+* **🎯 Current Phase:** `v0.5 — RESTful API, OpenAPI & PostgreSQL (In Progress)`
+* **🏷️ Latest Tag:** `v0.4 — Security & RBAC Baseline (Completed)`
 * **🔄 Update Frequency:** Continuous commits based on GitFlow feature branches.
 * **🏛️ Architecture:** Evolving toward RBAC authentication, REST APIs, and Docker containerization.
 ---
@@ -31,6 +31,7 @@ Planned features include REST APIs, automated testing, PostgreSQL integration, D
 
 * **Language:** Java 21 (LTS)
 * **Framework:** Spring Boot 4.x
+* **Database:** PostgreSQL (Cloud-hosted via **Neon**) ☁️
 * **Template Engine:** Thymeleaf (Dynamic Layout Pattern)
 * **UI & Styling:** AdminLTE 4 (Bootstrap 5) & Bootstrap Icons
 * **CI/CD:** GitHub Actions (Automated Maven Build & Testing pipeline)
@@ -66,16 +67,23 @@ src/main/java/com/josepereira/inventory_admin_suite
 │   ├── UserCreateDTO.java
 │   └── UserUpdateDTO.java
 ├── entity
+│   ├── Permission.java
+│   ├── Role.java
 │   └── User.java
 ├── exception
 │   ├── GlobalExceptionHandler.java
 │   └── ResourceNotFoundException.java
 ├── repository
+│   ├── PermissionRepository.java
+│   ├── RoleRepository.java
 │   └── UserRepository.java
+├── security
+│   ├── CustomUserDetails.java
+│   └── UserDetailsServiceImpl.java
 ├── service
 │   ├── impl/
 │   └── UserService.java
-└── InventoryAdminSuiteApplication.java 
+└── InventoryAdminSuiteApplication.java
 ```
 ---
 
@@ -119,16 +127,16 @@ src/main/java/com/josepereira/inventory_admin_suite
 - [x] Unit Testing Suite & Code Quality Validation (JUnit 5 & Mockito)
 
 ### 🔐 v0.4 — Security & RBAC Baseline
-- [ ] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
-- [ ] Role & Permission entities and database mapping (`RBAC` Architecture)
-- [ ] User details service & authentication provisioning
-- [ ] Method-level security (`@PreAuthorize`) for views and actions
+- [x] Role & Permission entities and database mapping (`RBAC` Architecture)
+- [x] Refactor and adapt unit & integration test suites for the new RBAC domain model
+- [x] **PostgreSQL integration via Neon (Cloud Database)** 🟢
+- [x] User details service & authentication provisioning
+- [x] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
 
 ### 🌐 v0.5 — RESTful API, OpenAPI & PostgreSQL
 - [ ] RESTful API endpoints implementation (`@RestController`)
 - [ ] JSON response standard & HTTP status codes optimization
 - [ ] OpenAPI 3 / Swagger UI integration for interactive API documentation
-- [ ] PostgreSQL integration for Production profile
 - [ ] Integration & End-to-end verification (`@SpringBootTest`)
 
 ### 🐳 v0.6 — Containerization & Production Release
