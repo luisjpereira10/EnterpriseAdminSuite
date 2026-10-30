@@ -30,6 +30,10 @@ public class UserController {
         if (!model.containsAttribute("users")) {
             model.addAttribute("users", userService.getAllUsers());
         }
+
+        if (!model.containsAttribute("availableRoles")) {
+            model.addAttribute("availableRoles", userService.getAllRoles());
+        }
     }
 
     @GetMapping

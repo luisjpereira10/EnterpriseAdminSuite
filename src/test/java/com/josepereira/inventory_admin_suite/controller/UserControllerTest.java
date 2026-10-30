@@ -18,6 +18,7 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
@@ -53,7 +54,7 @@ public class UserControllerTest {
                         .param("email", "john@example.com")
                         .param("password", "password123")
                         .param("confirmPassword", "password123")
-                        .param("role", "user"))
+                        .param("roleIds", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/users"))
                 .andExpect(flash().attributeExists("successMessage"));
@@ -70,7 +71,7 @@ public class UserControllerTest {
                         .param("email", "john@example.com")
                         .param("password", "password123")
                         .param("confirmPassword", "differentPassword")
-                        .param("role", "user"))
+                        .param("roleIds", "1"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("layout"))
                 .andExpect(model().attribute("showModal", true))
@@ -90,7 +91,8 @@ public class UserControllerTest {
                         .param("email", "jane@example.com")
                         .param("password", "newpassword123")
                         .param("confirmPassword", "newpassword123")
-                        .param("role", "user"))
+                        .param("roleIds", "1"))
+                .andDo(print())
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/users"))
                 .andExpect(flash().attribute("successMessage", "User updated successfully!"));
@@ -111,7 +113,7 @@ public class UserControllerTest {
                         .param("email", "jane@example.com")
                         .param("password", "newpassword123")
                         .param("confirmPassword", "newpassword123")
-                        .param("role", "user"))
+                        .param("roleIds", "1"))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/users"))
                 .andExpect(flash().attribute("errorMessage", "User not found"));
