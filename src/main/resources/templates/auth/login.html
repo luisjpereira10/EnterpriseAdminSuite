@@ -7,17 +7,25 @@
 <body class="login-page bg-body-secondary">
 <main class="login-box">
     <h1 class="login-logo">
-        <a href="../index2.html"><b>Dashboard | </b>Login</a>
+        <a th:href="@{/auth/login}"><b>Dashboard | </b>Login</a>
     </h1>
     <!-- /.login-logo -->
     <div class="card">
         <div class="card-body login-card-body">
             <p class="login-box-msg">Sign in to start your session</p>
+            <div th:if="${param.error}" class="alert alert-danger text-center mb-3" role="alert">
+                Invalid email or password.
+            </div>
 
-            <form action="../index3.html" method="post">
+            <!-- Logout message alert -->
+            <div th:if="${param.logout}" class="alert alert-success text-center mb-3" role="alert">
+                You have been logged out successfully.
+            </div>
+
+            <form th:action="@{/login}" method="post">
                 <label class="visually-hidden" for="loginEmail">Email</label>
                 <div class="input-group mb-3">
-                    <input id="loginEmail" type="email" class="form-control" placeholder="Email" />
+                    <input id="loginEmail" type="email" name="email" class="form-control" placeholder="Email" required />
                     <div class="input-group-text">
                         <span class="bi bi-envelope"></span>
                     </div>
@@ -28,7 +36,9 @@
                             id="loginPassword"
                             type="password"
                             class="form-control"
+                            name="password"
                             placeholder="Password"
+                            required
                     />
                     <div class="input-group-text">
                         <span class="bi bi-lock-fill"></span>
@@ -75,7 +85,7 @@
         crossorigin="anonymous"
 ></script>
 <!--end::Required Plugin(Bootstrap 5)--><!--begin::Required Plugin(AdminLTE)-->
-<script src="../js/adminlte.js"></script>
+<script th:src="@{/js/adminlte.js}"></script>
 <!--end::Required Plugin(AdminLTE)-->
 <!--begin::OverlayScrollbars Configure-->
 <script>

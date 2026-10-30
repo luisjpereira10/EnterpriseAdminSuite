@@ -104,7 +104,7 @@
                             class="user-image rounded-circle shadow"
                             alt="Jose Pereira"
                     />
-                    <span class="d-none d-md-inline"Jose Pereira</span>
+                    <span class="d-none d-md-inline">Jose Pereira</span>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                     <!--begin::User Image-->
@@ -122,9 +122,12 @@
                     <!--end::User Image-->
 
                     <!--begin::Menu Footer-->
-                    <li class="user-footer">
-                        <a th:href="@{settings}" class="btn btn-outline-secondary">Profile</a>
-                        <a href="#" class="btn btn-outline-danger float-end">Sign out</a>
+                    <li class="user-footer d-flex align-items-center">
+                        <a th:href="@{/settings}" class="btn btn-outline-secondary btn-flat">Profile</a>
+
+                        <form th:action="@{/logout}" method="post" class="mb-0 ms-auto">
+                            <button type="submit" class="btn btn-danger btn-flat">Sign out</button>
+                        </form>
                     </li>
                     <!--end::Menu Footer-->
                 </ul>

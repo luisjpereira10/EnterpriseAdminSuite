@@ -12,8 +12,8 @@ A modern inventory management web application built with **Spring Boot 4**, **Ja
 ### 🚧 Work in Progress & Active Evolution
 This application is actively being built and refined. Features are deployed incrementally across scheduled release milestones (see [Development Roadmap](#-development-roadmap)).
 
-* **🎯 Current Phase:** `v0.4 — Security & RBAC Baseline (In Progress)`
-* **🏷️ Latest Tag:** `v0.3 — Testing Suite & Coverage (Completed)`
+* **🎯 Current Phase:** `v0.5 — RESTful API, OpenAPI & PostgreSQL (In Progress)`
+* **🏷️ Latest Tag:** `v0.4 — Security & RBAC Baseline (Completed)`
 * **🔄 Update Frequency:** Continuous commits based on GitFlow feature branches.
 * **🏛️ Architecture:** Evolving toward RBAC authentication, REST APIs, and Docker containerization.
 ---
@@ -67,16 +67,23 @@ src/main/java/com/josepereira/inventory_admin_suite
 │   ├── UserCreateDTO.java
 │   └── UserUpdateDTO.java
 ├── entity
+│   ├── Permission.java
+│   ├── Role.java
 │   └── User.java
 ├── exception
 │   ├── GlobalExceptionHandler.java
 │   └── ResourceNotFoundException.java
 ├── repository
+│   ├── PermissionRepository.java
+│   ├── RoleRepository.java
 │   └── UserRepository.java
+├── security
+│   ├── CustomUserDetails.java
+│   └── UserDetailsServiceImpl.java
 ├── service
 │   ├── impl/
 │   └── UserService.java
-└── InventoryAdminSuiteApplication.java 
+└── InventoryAdminSuiteApplication.java
 ```
 ---
 
@@ -123,14 +130,13 @@ src/main/java/com/josepereira/inventory_admin_suite
 - [x] Role & Permission entities and database mapping (`RBAC` Architecture)
 - [x] Refactor and adapt unit & integration test suites for the new RBAC domain model
 - [x] **PostgreSQL integration via Neon (Cloud Database)** 🟢
-- [ ] User details service & authentication provisioning
-- [ ] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
+- [x] User details service & authentication provisioning
+- [x] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
 
 ### 🌐 v0.5 — RESTful API, OpenAPI & PostgreSQL
 - [ ] RESTful API endpoints implementation (`@RestController`)
 - [ ] JSON response standard & HTTP status codes optimization
 - [ ] OpenAPI 3 / Swagger UI integration for interactive API documentation
-- [ ] PostgreSQL integration for Production profile
 - [ ] Integration & End-to-end verification (`@SpringBootTest`)
 
 ### 🐳 v0.6 — Containerization & Production Release
