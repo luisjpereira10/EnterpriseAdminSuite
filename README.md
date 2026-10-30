@@ -31,6 +31,7 @@ Planned features include REST APIs, automated testing, PostgreSQL integration, D
 
 * **Language:** Java 21 (LTS)
 * **Framework:** Spring Boot 4.x
+* **Database:** PostgreSQL (Cloud-hosted via **Neon**) ☁️
 * **Template Engine:** Thymeleaf (Dynamic Layout Pattern)
 * **UI & Styling:** AdminLTE 4 (Bootstrap 5) & Bootstrap Icons
 * **CI/CD:** GitHub Actions (Automated Maven Build & Testing pipeline)
@@ -119,10 +120,11 @@ src/main/java/com/josepereira/inventory_admin_suite
 - [x] Unit Testing Suite & Code Quality Validation (JUnit 5 & Mockito)
 
 ### 🔐 v0.4 — Security & RBAC Baseline
-- [ ] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
-- [ ] Role & Permission entities and database mapping (`RBAC` Architecture)
+- [x] Role & Permission entities and database mapping (`RBAC` Architecture)
+- [x] Refactor and adapt unit & integration test suites for the new RBAC domain model
+- [x] **PostgreSQL integration via Neon (Cloud Database)** 🟢
 - [ ] User details service & authentication provisioning
-- [ ] Method-level security (`@PreAuthorize`) for views and actions
+- [ ] Custom Spring Security configuration (Form Login, Sessions & Password Encoding)
 
 ### 🌐 v0.5 — RESTful API, OpenAPI & PostgreSQL
 - [ ] RESTful API endpoints implementation (`@RestController`)
