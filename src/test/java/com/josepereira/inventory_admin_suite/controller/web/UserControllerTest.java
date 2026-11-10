@@ -1,13 +1,15 @@
-package com.josepereira.inventory_admin_suite.controller;
+package com.josepereira.inventory_admin_suite.controller.web;
 
-import com.josepereira.inventory_admin_suite.controller.web.UserController;
 import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
 import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.exception.ResourceNotFoundException;
+import com.josepereira.inventory_admin_suite.security.JwtUtils;
 import com.josepereira.inventory_admin_suite.service.UserService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
@@ -23,12 +25,19 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UserControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
     @MockitoBean
     private UserService userService;
+
+    @MockitoBean
+    private JwtUtils jwtUtils;
+
+    @MockitoBean
+    private UserDetailsService userDetailsService;
 
     @Test
     @DisplayName("GET /users - Should return layout view with user list and common model attributes")
