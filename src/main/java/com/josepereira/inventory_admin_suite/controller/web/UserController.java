@@ -1,4 +1,4 @@
-package com.josepereira.inventory_admin_suite.controller;
+package com.josepereira.inventory_admin_suite.controller.web;
 
 import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
 import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;

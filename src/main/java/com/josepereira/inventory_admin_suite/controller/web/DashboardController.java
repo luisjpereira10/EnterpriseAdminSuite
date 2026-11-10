@@ -1,4 +1,4 @@
-package com.josepereira.inventory_admin_suite.controller;
+package com.josepereira.inventory_admin_suite.controller.web;
 
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.josepereira.inventory_admin_suite.controller;
+package com.josepereira.inventory_admin_suite.controller.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
