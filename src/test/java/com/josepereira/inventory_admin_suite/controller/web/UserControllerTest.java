@@ -152,7 +152,7 @@ public class UserControllerTest {
         mockMvc.perform(get("/users/delete/{id}", userId))
                 .andExpect(status().is3xxRedirection())
                 .andExpect(redirectedUrl("/users"))
-                .andExpect(flash().attribute("errorMensaje", "User not found with id:" + userId));
+                .andExpect(flash().attribute("errorMessage", "User not found with id:" + userId));
 
         verify(userService, times(1)).deleteUser(userId);
     }

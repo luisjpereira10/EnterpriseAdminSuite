@@ -98,7 +98,7 @@ public class UserController {
         if(userService.deleteUser(id)){
             redirectAttributes.addFlashAttribute("successMessage", "User deleted successfully!");
         }else {
-            redirectAttributes.addFlashAttribute("errorMensaje", "User not found with id:" +id);
+            redirectAttributes.addFlashAttribute("errorMessage", "User not found with id:" +id);
         }
 
         return "redirect:/users";
