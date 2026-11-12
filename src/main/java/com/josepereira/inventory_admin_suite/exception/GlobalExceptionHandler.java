@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@ControllerAdvice
+@ControllerAdvice(basePackages = "com.josepereira.inventory_admin_suite.controller.web")
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
