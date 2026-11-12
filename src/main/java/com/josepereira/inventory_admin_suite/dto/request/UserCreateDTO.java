@@ -1,4 +1,4 @@
-package com.josepereira.inventory_admin_suite.dto;
+package com.josepereira.inventory_admin_suite.dto.request;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;

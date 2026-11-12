@@ -1,7 +1,7 @@
 package com.josepereira.inventory_admin_suite.controller.web;
 
-import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
-import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
+import com.josepereira.inventory_admin_suite.dto.request.UserCreateDTO;
+import com.josepereira.inventory_admin_suite.dto.request.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.exception.ResourceNotFoundException;
 import com.josepereira.inventory_admin_suite.security.JwtUtils;
 import com.josepereira.inventory_admin_suite.service.UserService;

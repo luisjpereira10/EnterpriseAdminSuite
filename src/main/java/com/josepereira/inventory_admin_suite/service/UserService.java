@@ -1,11 +1,10 @@
 package com.josepereira.inventory_admin_suite.service;
 
-import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
-import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
+import com.josepereira.inventory_admin_suite.dto.request.UserCreateDTO;
+import com.josepereira.inventory_admin_suite.dto.request.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.entity.Role;
 import com.josepereira.inventory_admin_suite.entity.User;
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
     User userCreated(UserCreateDTO userCreateDTO);

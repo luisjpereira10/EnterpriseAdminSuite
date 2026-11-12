@@ -1,4 +1,4 @@
-package com.josepereira.inventory_admin_suite.controller.rest.dto;
+package com.josepereira.inventory_admin_suite.dto.response;
 
 import lombok.Data;
 

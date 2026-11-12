@@ -1,22 +1,19 @@
 package com.josepereira.inventory_admin_suite.service.impl;
 
-import com.josepereira.inventory_admin_suite.dto.UserCreateDTO;
-import com.josepereira.inventory_admin_suite.dto.UserUpdateDTO;
+import com.josepereira.inventory_admin_suite.dto.request.UserCreateDTO;
+import com.josepereira.inventory_admin_suite.dto.request.UserUpdateDTO;
 import com.josepereira.inventory_admin_suite.entity.Role;
 import com.josepereira.inventory_admin_suite.entity.User;
 import com.josepereira.inventory_admin_suite.exception.ResourceNotFoundException;
 import com.josepereira.inventory_admin_suite.repository.RoleRepository;
 import com.josepereira.inventory_admin_suite.repository.UserRepository;
 import com.josepereira.inventory_admin_suite.service.UserService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {

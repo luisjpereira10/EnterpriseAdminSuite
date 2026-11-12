@@ -1,7 +1,7 @@
 package com.josepereira.inventory_admin_suite.controller.rest;
 
-import com.josepereira.inventory_admin_suite.controller.rest.dto.JwtResponse;
-import com.josepereira.inventory_admin_suite.controller.rest.dto.LoginRequest;
+import com.josepereira.inventory_admin_suite.dto.response.JwtResponse;
+import com.josepereira.inventory_admin_suite.dto.request.LoginRequest;
 import com.josepereira.inventory_admin_suite.security.JwtUtils;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
